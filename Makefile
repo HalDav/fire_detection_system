@@ -15,7 +15,7 @@ SRC := $(wildcard src/*.c)
 OBJ := $(SRC:.c=.o)
 
 # CFLAGS
-CFLAGS = -Wall -Os -mmcu=$(MCU) -DF_CPU=$(F_CPU) -std=c11 -Isrc
+CFLAGS = -Wall -Os -mmcu=$(MCU) -DF_CPU=$(F_CPU) -std=c99 -Isrc
 
 # Výstupy
 ELF = $(TARGET).elf

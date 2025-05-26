@@ -16,18 +16,8 @@
     {
       "label": "Build AVR",
       "type": "shell",
-      "command": "avr-gcc",
-      "args": [
-        "-mmcu=atmega328p",
-        "-DF_CPU=16000000UL",
-        "-Os",
-        "-Wall",
-        "-I",
-        "./src",
-        "./src/main.c",
-        "-o",
-        "./build/main.elf"
-      ],
+      "command": "make",
+      "args": [],
       "dependsOn": [
         "Create build folder"
       ],
@@ -41,8 +31,8 @@
       "args": [
         "-O",
         "ihex",
-        "./build/main.elf",
-        "./build/main.hex"
+        "./main.elf",
+        "./main.hex"
       ],
       "dependsOn": [
         "Build AVR"
@@ -63,7 +53,7 @@
         "-b115200",
         "-D",
         "-U",
-        "flash:w:./build/main.hex:i"
+        "flash:w:./main.hex:i"
       ],
       "dependsOn": [
         "Convert to HEX"
