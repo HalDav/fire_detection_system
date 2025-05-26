@@ -1,0 +1,83 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Create build folder",
+      "type": "shell",
+      "command": "powershell",
+      "args": [
+        "-NoProfile",
+        "-Command",
+        "if (-not (Test-Path -Path './build')) { New-Item -ItemType Directory -Path './build' }"
+      ],
+      "problemMatcher": [],
+      "group": "build"
+    },
+    {
+      "label": "Build AVR",
+      "type": "shell",
+      "command": "avr-gcc",
+      "args": [
+        "-mmcu=atmega328p",
+        "-DF_CPU=16000000UL",
+        "-Os",
+        "-Wall",
+        "-I",
+        "./src",
+        "./src/main.c",
+        "-o",
+        "./build/main.elf"
+      ],
+      "dependsOn": [
+        "Create build folder"
+      ],
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "Convert to HEX",
+      "type": "shell",
+      "command": "avr-objcopy",
+      "args": [
+        "-O",
+        "ihex",
+        "./build/main.elf",
+        "./build/main.hex"
+      ],
+      "dependsOn": [
+        "Build AVR"
+      ],
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "Upload AVR",
+      "type": "shell",
+      "command": "avrdude",
+      "args": [
+        "-v",
+        "-patmega328p",
+        "-carduino",
+        "-P",
+        "COM4",
+        "-b115200",
+        "-D",
+        "-U",
+        "flash:w:./build/main.hex:i"
+      ],
+      "dependsOn": [
+        "Convert to HEX"
+      ],
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "Build and Upload AVR",
+      "dependsOn": [
+        "Upload AVR"
+      ],
+      "dependsOrder": "sequence",
+      "group": "build"
+    }
+  ]
+}
