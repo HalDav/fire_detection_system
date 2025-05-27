@@ -39,7 +39,11 @@ int main(void) {
     
 
     while (1) {
-        send_char('D');
+        send_string("Input float: ");
+        float c = get_float();
+        send_string("Your float is: ");
+        send_float(c);
+        send_string(" \n");
         _delay_ms(250);
 
 

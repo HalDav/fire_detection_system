@@ -1,4 +1,6 @@
 #include <avr/io.h>
+#include <stdio.h>
+#include <math.h>
 #include "usart.h"
 
 
@@ -18,21 +20,42 @@ void send_char(char c){
    }
    UDR0 = c;
 }
-void send_string(char word[]){
 
+void send_string(const char *word){
+    for(int j = 0; word[j] != '\0'; j++){
+        send_char(word[j]);
+    }
 }
-void send_float(float float_number){
 
+void send_float(float float_number){
+    char buffer[20];
+    dtostrf(float_number, 0, 4, buffer);
+    send_string(buffer);
 }
 char get_char(){
+    while(!(UCSR0A & (1 << RXC0)));
+    return UDR0;
     
 }
-void get_string(char* buffer, uint8_t length){
 
-}
+//void get_string(char* buffer, uint8_t length){
+
+//}
+
 float get_float(){
-
+    char buffer[20];
+    int j;
+    while(j < (sizeof(buffer)-1)){
+        char c = get_char();
+        if(c == '\n' || c == '\r'){
+            break;
+        }
+        buffer[j++] = c;
+    }
+    buffer[j] = '\0';
+    return atof(buffer);
 }
+
 void usart_flush(){
 
 }

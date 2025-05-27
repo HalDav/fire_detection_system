@@ -7,10 +7,10 @@
 
 void usart_init();
 void send_char(char c);
-void send_string(char word[]);
+void send_string(const char *word);
 void send_float(float float_number);
 char get_char();
-void get_string(char* buffer, uint8_t length);
+//void get_string(char* buffer, uint8_t length);
 float get_float(); 
 void usart_flush();
 #endif      
