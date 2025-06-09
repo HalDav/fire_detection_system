@@ -40,6 +40,7 @@ int main(void) {
 
     while (1) {
         send_string("Input float: ");
+        usart_flush();
         float c = get_float();
         send_string("Your float is: ");
         send_float(c);

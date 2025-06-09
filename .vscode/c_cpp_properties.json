@@ -4,7 +4,7 @@
             "name": "Win32",
             "includePath": [
                 "${workspaceFolder}/src",
-                "c:/WinAVR-20100110/avr/include/"
+                "c:\\Users\\David\\avr8-gnu-toolchain-win32_x86_64\\avr\\include"
             ],
             "defines": [
                 "F_CPU=16000000UL",
