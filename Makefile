@@ -35,7 +35,7 @@ $(HEX): $(ELF)
 	$(OBJCOPY) -O ihex -R .eeprom $< $@
 
 $(ELF): $(OBJ)
-	$(CC) $(CFLAGS) $^ -o $@
+	$(CC) $(CFLAGS) $^ -o $@ -lm
 
 src/%.o: src/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
@@ -44,4 +44,4 @@ flash: $(HEX)
 	$(AVRDUDE) -p $(AVRDUDE_MCU) -c $(AVRDUDE_PROGRAMMER) -P $(AVRDUDE_PORT) -b $(AVRDUDE_BAUD) -U flash:w:$(HEX):i
 
 clean:
-	rm -f src/*.o $(ELF) $(HEX)
+	del /Q src\\*.o $(ELF) $(HEX) 2>nul

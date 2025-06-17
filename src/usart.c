@@ -28,36 +28,42 @@ void send_string(const char *word){
 }
 
 void send_float(float float_number){
-    char buffer[20];
-    dtostrf(float_number, 8, 4, buffer);
+    char buffer[40];
+    dtostrf(float_number, 0, 4, buffer);
     send_string(buffer);
 }
+
 char get_char(){
     while(!(UCSR0A & (1 << RXC0)));
     return UDR0;
     
 }
+
+/* 
 float get_float(){
-    char buffer[20] = {0};
+    char buffer[40];
     int j = 0;
     while(j < (sizeof(buffer)-1)){
         char c = get_char();
-        if(c == '\n' || c == '\r'){
+        if(c == '\r'){
+            continue;
+        }
+        if(c == '\n'){
             break;
         }
-        buffer[j++] = c;
+        
+        buffer[j] = c;
+        j++;
     }
     buffer[j] = '\0';
 
-    for(int k = 0; k <=(sizeof(buffer)-1); k++){
-        send_char(buffer[k]);
-    }
+    send_string(buffer);
 
-    return atof(buffer);
-}
+    return (float)atof(buffer);
+} */
 
 void usart_flush() {
     while (UCSR0A & (1 << RXC0)) {
-        volatile char dummy = UDR0; // přečti a zahodí znak
+        volatile char dummy = UDR0; 
     }
 }
